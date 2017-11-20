@@ -8,7 +8,7 @@ $(() => {
 		let $svg = $('#svg'),
     		$save = $('#save-to-pdf'),
         $filenameInput = $('#filename');
-        
+
   	$save.on('click', () => {
     		// Convert it to PDF first
     		pdflib.convertToPdf($svg[0], doc => {
@@ -23,7 +23,7 @@ $(() => {
 		function convertToPdf(svg, callback) {
         // Call svgAsDataUri from saveSvgAsPng.js
         window.svgAsDataUri(svg, {}, svgUri => {
-            // Create an anonymous image in memory to set 
+            // Create an anonymous image in memory to set
             // the png content to
             let $image = $('<img>'),
             		image = $image[0];
@@ -39,20 +39,24 @@ $(() => {
                         doc = new jsPDF('portrait', 'pt'),
                         //imgWidth = image.width,
                         //imgHeight = image.height;
-                        imgWidth = 4096,
-                        imgHeight = 4096;
+												// Setting the quality of the image
+                        imgWidth = 4000,
+                        imgHeight = 4000,
+												scalingFactor = 1;
                     // Set the canvas size to the size of the image
                     canvas.width = imgWidth;
                     canvas.height = imgHeight;
 
                     ctx.fillStyle="#FFFFFF";
                     // Draw the image to the canvas element
-                    ctx.drawImage(image, 0, 0, 4096, 4096);
+										// zooming the image and positioning on the canvas
+                    ctx.drawImage(image, (imgWidth*scalingFactor-imgWidth)/-2, (imgHeight*scalingFactor-imgHeight)/-2, imgWidth*scalingFactor, imgHeight*scalingFactor);
+                    // ctx.drawImage(image, 0, 0, imgWidth, imgWidth);
 
                     // Add the image to the pdf
                     let dataUrl = canvas.toDataURL('image/jpeg');
                     // Where and which size to display picture on pdf page
-                    doc.addImage(dataUrl, 'JPEG', 10, 100, 570, 580);
+                    doc.addImage(dataUrl, 'JPEG', 10, 120, 570, 570);
 
                     callback(doc);
                 });
@@ -64,7 +68,7 @@ $(() => {
         let $link = $('<a>'),
         		link = $link[0],
         		dataUriString = pdfDoc.output('dataurlstring');
-      	
+
         // On click of the link, set the HREF and download of it
         // so that it behaves as a link to a file
         $link.on('click', () => {
@@ -77,7 +81,7 @@ $(() => {
         $('body').append($link);
         $link[0].click();
     }
-    
+
     // Export this mini-library to the global scope
     global.pdflib = global.pdflib || {};
     global.pdflib.convertToPdf = convertToPdf;
