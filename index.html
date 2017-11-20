@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Archery Score Equalify v0.1 by rebegin</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.1.135/jspdf.debug.js"></script>
+  <script src="https://rawgit.com/exupero/saveSvgAsPng/gh-pages/saveSvgAsPng.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="js/convert.js"></script>
+</head>
+
+<body>
+  <label for="filename">File Name:</label>
+  <input type="text" id="filename" value="MyPdf.pdf">
+  <button type="button" id="save-to-pdf">Save as PDF</button>
+  <br />
+  <svg xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://web.resource.org/cc/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:svg="http://www.w3.org/2000/svg" xmlns="http://www.w3.org/2000/svg" version="1.0" width="5000px" height="5000px"
+    viewBox="0 0 80 80" id="svg">
+  <rect width="80" height="80" style="fill:rgb(255,255,255);" />
+  <circle cx="40" cy="40" r="39.9" fill="white" stroke="black" stroke-width="0.2" id="Zone1" />
+  <circle cx="40" cy="40" r="35.9" fill="white" stroke="black" stroke-width="0.2" id="Zone2" />
+  <circle cx="40" cy="40" r="32"   fill="black" id="Zone3" />
+  <circle cx="40" cy="40" r="27.9" fill="black" stroke="white" stroke-width="0.2" id="Zone4" />
+  <circle cx="40" cy="40" r="24"   fill="#41b7c8" id="Zone5" />
+  <circle cx="40" cy="40" r="19.9" fill="#41b7c8" stroke="black" stroke-width="0.2" id="Zone6" />
+  <circle cx="40" cy="40" r="15.9" fill="#fd1b14" stroke="black" stroke-width="0.2" id="Zone7" />
+  <circle cx="40" cy="40" r="11.9" fill="#fd1b14" stroke="black" stroke-width="0.2" id="Zone8" />
+  <circle cx="40" cy="40" r="7.9" fill="#fff535" stroke="black" stroke-width="0.2" id="Zone9" />
+  <circle cx="40" cy="40" r="3.9" fill="#fff535" stroke="black" stroke-width="0.2" id="Zone10" />
+  <circle cx="40" cy="40" r="1.9" fill="#fff535" stroke="black" stroke-width="0.1" id="Inner10" />
+  <path d="M 40 39.8 L 40 40.2 M 39.8 40 L 40.2 40" stroke="black" stroke-width="0.1" id="Center" />
+</svg>
+</body>
+
+</html>
