@@ -50,34 +50,35 @@ $(() => {
                     let canvas = document.createElement('canvas'),
                         ctx = canvas.getContext('2d'),
                         doc = new jsPDF('portrait', 'mm'),
-                        //imgWidth = image.width,
-                        //imgHeight = image.height;
+                        //  imgWidth = image.width,
+                        //  imgHeight = image.height;
+												// Setting the quality of the image
                         imgWidth = 2000,
                         imgHeight = 2000,
-												// Setting the quality of the image
 												// Two way of getting input value
 												$score1Input = $('#score1'),
 												score1Value = $score1Input.val(),
 												score2Value = document.getElementById("score2").value,
 												newDiameter = 40 / Math.sqrt((300-score1Value) / (300-score2Value)),
+												// If it is 2, than it is going to be a 40cm targetface. In case of 1, than it is 20cm and it fits exatly to a A4 paper.
 												scalingTmp = 2,
 												scalingFactor = scalingTmp * (newDiameter / 40);
 												// scalingFactor = 2;
                     // Set the canvas size to the size of the image
                     canvas.width = imgWidth;
                     canvas.height = imgHeight;
-										// Trying to fill the black background
-                    ctx.fillStyle="#23cd00";
-										ctx.fill();
+										// Fill the black background
+                    ctx.fillStyle="#FFF";
+										ctx.fillRect(0,0,2000,2000);
+										// ctx.fill();
                     // Draw the image to the canvas element
 										// zooming the image and positioning on the canvas
-                    ctx.drawImage(image, (imgWidth*scalingFactor-imgWidth)/-2, (imgHeight*scalingFactor-imgHeight)/-2, imgWidth*scalingFactor, imgHeight*scalingFactor);
+										ctx.drawImage(image, (imgWidth*scalingFactor-imgWidth)/-2, (imgHeight*scalingFactor-imgHeight)/-2, imgWidth*scalingFactor, imgHeight*scalingFactor);
                     // ctx.drawImage(image, 0, 0, imgWidth, imgWidth);
 
                     // Add the image to the pdf
                     let dataUrl = canvas.toDataURL('image/jpeg');
-										doc.setFillColor(204, 204,204,0);
-										doc.rect(10, 10, 150, 160, "F");
+
                     // Where and which size to display picture on pdf page
                     doc.addImage(dataUrl, 'JPEG', 5, 49, 200, 200);
                     callback(doc);
