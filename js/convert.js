@@ -14,6 +14,7 @@ $(() => {
     		pdflib.convertToPdf($svg[0], doc => {
         		// Get the file name and download the pdf
         		let filename = $filenameInput.val();
+
             pdflib.downloadPdf(filename, doc);
         });
     });
@@ -36,18 +37,26 @@ $(() => {
                     // invoke the jsPDF library
                     let canvas = document.createElement('canvas'),
                         ctx = canvas.getContext('2d'),
-                        doc = new jsPDF('portrait', 'pt'),
+                        doc = new jsPDF('portrait', 'mm'),
                         //imgWidth = image.width,
                         //imgHeight = image.height;
+                        imgWidth = 2000,
+                        imgHeight = 2000,
 												// Setting the quality of the image
-                        imgWidth = 4000,
-                        imgHeight = 4000,
-												scalingFactor = 1;
+												// Two way of getting input value
+												$score1Input = $('#score1'),
+												score1Value = $score1Input.val(),
+												score2Value = document.getElementById("score2").value,
+												newDiameter = 40 / Math.sqrt((300-score1Value) / (300-score2Value)),
+												scalingTmp = 2,
+												scalingFactor = scalingTmp * (newDiameter / 40);
+												// scalingFactor = 2;
                     // Set the canvas size to the size of the image
                     canvas.width = imgWidth;
                     canvas.height = imgHeight;
-
-                    ctx.fillStyle="#FFFFFF";
+										// Trying to fill the black background
+                    ctx.fillStyle="#23cd00";
+										ctx.fill();
                     // Draw the image to the canvas element
 										// zooming the image and positioning on the canvas
                     ctx.drawImage(image, (imgWidth*scalingFactor-imgWidth)/-2, (imgHeight*scalingFactor-imgHeight)/-2, imgWidth*scalingFactor, imgHeight*scalingFactor);
@@ -56,7 +65,7 @@ $(() => {
                     // Add the image to the pdf
                     let dataUrl = canvas.toDataURL('image/jpeg');
                     // Where and which size to display picture on pdf page
-                    doc.addImage(dataUrl, 'JPEG', 10, 120, 570, 570);
+                    doc.addImage(dataUrl, 'JPEG', 5, 49, 200, 200);
 
                     callback(doc);
                 });
