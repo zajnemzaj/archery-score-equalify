@@ -7,6 +7,7 @@
 $(() => {
 		let $svg = $('#svg'),
     		$save = $('#save-to-pdf'),
+		    $saveOpen = $('#save-to-pdf-and-open'),
         $filenameInput = $('#filename');
 
   	$save.on('click', () => {
@@ -16,6 +17,17 @@ $(() => {
         		let filename = $filenameInput.val();
 
             pdflib.downloadPdf(filename, doc);
+        });
+    });
+
+		$saveOpen.on('click', () => {
+    		// Convert it to PDF first
+    		pdflib.convertToPdf($svg[0], doc => {
+        		// Get the file name and download the pdf
+        		let filename = $filenameInput.val();
+						// Opening on new tab
+						doc.output('dataurlnewwindow');
+            // pdflib.downloadPdf(filename, doc);
         });
     });
 });
@@ -64,9 +76,10 @@ $(() => {
 
                     // Add the image to the pdf
                     let dataUrl = canvas.toDataURL('image/jpeg');
+										doc.setFillColor(204, 204,204,0);
+										doc.rect(10, 10, 150, 160, "F");
                     // Where and which size to display picture on pdf page
                     doc.addImage(dataUrl, 'JPEG', 5, 49, 200, 200);
-
                     callback(doc);
                 });
         });
