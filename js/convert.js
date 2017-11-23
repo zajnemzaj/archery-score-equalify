@@ -59,10 +59,11 @@ $(() => {
 												$score1Input = $('#score1'),
 												score1Value = $score1Input.val(),
 												score2Value = document.getElementById("score2").value,
-												newDiameter = 40 / Math.sqrt((300-score1Value) / (300-score2Value)),
+												newDiameter = 40 / Math.sqrt((300-score1Value) / (300-score2Value)) - 1,
 												// If it is 2, than it is going to be a 40cm targetface. In case of 1, than it is 20cm and it fits exatly to a A4 paper.
 												scalingTmp = 2,
 												scalingFactor = scalingTmp * (newDiameter / 40);
+												console.log(newDiameter);
 												// scalingFactor = 2;
                     // Set the canvas size to the size of the image
                     canvas.width = imgWidth;
