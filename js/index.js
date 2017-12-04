@@ -155,16 +155,49 @@ var targetFace = {
     ctxChart.clearRect(0, 0, 300, 300);
   },
 
+  /**
+   * Shoots a random arrow to the given target size and returns its score
+   * @param {number} diamTF
+   * @return {number} scoreOfArrow
+   */
+  getOneScore : function(diamTF) {
+    let scoreOfArrow = 0;
+
+    return scoreOfArrow;
+  },
+
+  /**
+   * Shoots a round of arrows to the given target size and returns the score
+   * @param {number} diamTF
+   * @return {number} scoreOfRound
+   */
+  getRoundScore : function(diamTF) {
+    let scoreOfRound = 0;
+
+    return scoreOfRound;
+  },
+
+  /**
+   * Shoots a No of rounds to the target and returns the diameter of shooting
+   * to get the given score
+   * @param {number} roundsNr
+   * @param {number} scoreToTest
+   * @return {number} diameter
+   */
+  getXRoundsDiam : function(roundsNr,scoreToTest) {
+    let diameter = 0;
+
+    return diameter;
+  },
+
   getGrouping : function() {
 
+    document.getElementById("inputGrouping").value = 15;
+  },
+
+  getTFDiam : function() {
+    document.getElementById("inputTFBig").value = 27;
   }
 };
 
 targetFace.drawTF(ctx,targetFace.size,targetFace.smallSize);
-// targetFace.drawArrow(ctx,300,150);
-/*
-let btnShoot1 = document.getElementById('button-shoot-1');
-let btnShoot30 = document.getElementById('button-shoot-30');
-let btnClear = document.getElementById('button-clear');
-*/
-//btnShoot1.onclick = targetFace.draw1Arrow();
