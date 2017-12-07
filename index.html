@@ -13,11 +13,13 @@
   <input type="text" id="inputHighScore" value="285">
   <br>
   <label for="inputRounds">Rounds to shoot:</label>
-  <input type="text" id="inputRounds" value="10">
-  <button type="button" id="buttonGetGrouping" onclick="targetFace.getXRoundsDiam(140)">Find grouping size</button>
+  <input type="text" id="inputRounds" value="200">
+  <button type="button" id="buttonGetGrouping" onclick="targetFace.getRoundDiamAverages()">Find grouping size</button>
   <br>
   <label for="inputGrouping">Grouping for higher score (mm):</label>
   <input type="text" id="inputGrouping" value="">
+  <br>
+  <button type="button" id="buttonClearChart" onclick="targetFace.clearCanvasChart(ctx1rst,ctx1rstChart)">Clear canvas</button>
   <br>
     <canvas id="canvas1rstTargetFace" width="400" height="400" style="border:1px solid #d3d3d3;">
       Your browser does not support the canvas element.
@@ -26,36 +28,6 @@
       Your browser does not support the canvas element.
     </canvas>
   <div id="tmpOutput"></div>
-  <hr>
-  <button type="button" id="button-suggest" onclick="targetFace.getTFDiam()">Calculate diameter</button>
-  <br>
-  <label for="inputTFBig">Suggested diameter for highscore shooter (mm):</label>
-  <input type="text" id="inputTFBig" value="">
-  <hr>
-  <label for="inputBigTF">Big targetFace diameter (mm):</label>
-  <input type="text" id="inputBigTF" value="400">
-  <br>
-  <label for="inputSmallTF">Small targetFace diameter (mm):</label>
-  <input type="text" id="inputSmallTF" value="200">
-  <br>
-  <label for="inputMaxRadius">Max grouping diameter (mm):</label>
-  <input type="text" id="inputMaxRadius" value="400">
-  <br>
-  <button type="button" id="button-shoot-1" onclick="targetFace.getSingleScore()">Shoot an arrow</button>
-  <button type="button" id="button-shoot-30" onclick="targetFace.shoot30Arrows()">Shoot 30 arrows (finish 1 round)</button>
-  <button type="button" id="button-clear" onclick="targetFace.clearCanvas()">Reload canvas</button>
-<br>
-<label for="rounds">Rounds to shoot:</label>
-<input type="text" id="rounds" value="1000">
-<button type="button" id="button-shoot-rounds" onclick="targetFace.shootRounds()">Shoot them</button>
-<br>
-<canvas id="canvasTargetFace" width="400" height="400" style="border:1px solid #d3d3d3;">
-  Your browser does not support the canvas element.
-</canvas>
-<canvas id="canvasStats" width="300" height="300" style="border:1px solid #d3d3d3;">
-  Your browser does not support the canvas element.
-</canvas>
-<button type="button" id="buttonClearChart" onclick="targetFace.clearCanvasChart(ctxChart)">Clear canvas</button>
 <script src="js/index.js"></script>
 </body>
 </html>
