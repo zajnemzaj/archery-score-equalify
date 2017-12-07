@@ -11,10 +11,21 @@
   <br>
   <label for="inputHighScore">Higher score:</label>
   <input type="text" id="inputHighScore" value="285">
-  <button type="button" id="buttonGetGrouping" onclick="targetFace.getGrouping()">Find grouping size</button>
+  <br>
+  <label for="inputRounds">Rounds to shoot:</label>
+  <input type="text" id="inputRounds" value="10">
+  <button type="button" id="buttonGetGrouping" onclick="targetFace.getXRoundsDiam(140)">Find grouping size</button>
   <br>
   <label for="inputGrouping">Grouping for higher score (mm):</label>
   <input type="text" id="inputGrouping" value="">
+  <br>
+    <canvas id="canvas1rstTargetFace" width="400" height="400" style="border:1px solid #d3d3d3;">
+      Your browser does not support the canvas element.
+    </canvas>
+    <canvas id="canvas1rstStats" width="400" height="300" style="border:1px solid #d3d3d3;">
+      Your browser does not support the canvas element.
+    </canvas>
+  <div id="tmpOutput"></div>
   <hr>
   <button type="button" id="button-suggest" onclick="targetFace.getTFDiam()">Calculate diameter</button>
   <br>
@@ -44,7 +55,7 @@
 <canvas id="canvasStats" width="300" height="300" style="border:1px solid #d3d3d3;">
   Your browser does not support the canvas element.
 </canvas>
-<button type="button" id="buttonClearChart" onclick="targetFace.clearCanvasChart()">Clear canvas</button>
+<button type="button" id="buttonClearChart" onclick="targetFace.clearCanvasChart(ctxChart)">Clear canvas</button>
 <script src="js/index.js"></script>
 </body>
 </html>
