@@ -60,15 +60,18 @@ var targetFace = {
   },
 
   /**
-   * Shoots a random arrow in the given gruping size and returns its score
+   * Shooting 1 arrow and getting the score of it
    * @param {number} maxRadius
-   * @return {number} scoreValue
+   * @param {number} targetfaceRadius
+   * @return {number} diameter
    */
-  getOneScore : function(maxRadius) {
+  getTFOneScore : function(maxRadius,targetfaceRadius) {
     var x = 0,
         y = 0,
+        drawx = 0,
+        drawy = 0,
         distanceFromCenter = 0,
-        scoreRadius = this.size/20, // starting with 10 ring which has 20mm radius (400/20) on 40cm targetface
+        scoreRadius = targetfaceRadius/10, // starting with 10 ring which has 20mm radius (400/20) on 40cm targetface
         scoreValue = 10; // starting score value
     do {
       if (scoreRadius > maxRadius) {
@@ -81,12 +84,15 @@ var targetFace = {
       while (parseFloat(distanceFromCenter) <= parseFloat(maxRadius)) {
           // console.log("scoreRadius:" ,scoreRadius, "scoreValue:",scoreValue);
         if (parseFloat(distanceFromCenter) <= parseFloat(scoreRadius)) {
-          this.drawArrow(ctx1rst,this.size/2-maxRadius+x,this.size/2-maxRadius+y);
+          drawx = this.size/2-maxRadius+x;
+          drawy = this.size/2-maxRadius+y;
+          this.drawArrow(ctx1rst,drawx,drawy);
           this.arrowCount++;
-          // console.log("scoreValue:",scoreValue,"distanceFromCenter:",distanceFromCenter);
+          // document.getElementById("tmpOutput").innerHTML += "x: " + x + ", y: " + y + ", drawx: " + drawx + ", drawy: " + drawy + ", score: " + scoreValue + ", distanceFromCenter: " + distanceFromCenter + "<br>";
+          // console.log("drawx:",drawx,"drawy:",drawy,"scoreValue:",scoreValue,"distanceFromCenter:",distanceFromCenter);
           return scoreValue;
         } else {
-          scoreRadius += this.size/20;
+          scoreRadius += targetfaceRadius/10;
           scoreValue--;
         }
       }
@@ -102,7 +108,7 @@ var targetFace = {
     var scoreOfRound = 0,
         scoreToTest = +document.getElementById("inputHighScore").value;
     do {
-      scoreOfRound += parseInt(this.getOneScore(parseInt(maxRadius)));
+      scoreOfRound += parseInt(this.getTFOneScore(parseInt(maxRadius),this.size/2));
       // console.log("scoreOfRound: ",scoreOfRound, "maxRadius: ", maxRadius);
     } while(this.arrowCount % 30 !== 0);
     this.roundCount++;
@@ -161,46 +167,6 @@ var targetFace = {
     document.getElementById("inputGrouping").value = finalDiam;
     return finalDiam;
     //CanvasObject.GetComponent<Canvas>().enabled = false;
-  },
-
-  /**
-   * Shooting 1 arrow and getting the score of it
-   * @param {number} maxRadius
-   * @param {number} targetfaceRadius
-   * @return {number} diameter
-   */
-  getTFOneScore : function(maxRadius,targetfaceRadius) {
-    var x = 0,
-        y = 0,
-        drawx = 0,
-        drawy = 0,
-        distanceFromCenter = 0,
-        scoreRadius = targetfaceRadius/10, // starting with 10 ring which has 20mm radius (400/20) on 40cm targetface
-        scoreValue = 10; // starting score value
-    do {
-      if (scoreRadius > maxRadius) {
-        scoreRadius = maxRadius;
-      }
-      x = getRandomNumber(maxRadius*2);
-      y = getRandomNumber(maxRadius*2);
-      // Getting distance from center
-      distanceFromCenter = Math.sqrt(Math.pow((maxRadius-x),2) + Math.pow((maxRadius-y),2));
-      while (parseFloat(distanceFromCenter) <= parseFloat(maxRadius)) {
-          // console.log("scoreRadius:" ,scoreRadius, "scoreValue:",scoreValue);
-        if (parseFloat(distanceFromCenter) <= parseFloat(scoreRadius)) {
-          drawx = this.size/2-maxRadius+x;
-          drawy = this.size/2-maxRadius+y;
-          this.drawArrow(ctx1rst,drawx,drawy);
-          this.arrowCount++;
-          // document.getElementById("tmpOutput").innerHTML += "x: " + x + ", y: " + y + ", drawx: " + drawx + ", drawy: " + drawy + ", score: " + scoreValue + ", distanceFromCenter: " + distanceFromCenter + "<br>";
-          // console.log("drawx:",drawx,"drawy:",drawy,"scoreValue:",scoreValue,"distanceFromCenter:",distanceFromCenter);
-          return scoreValue;
-        } else {
-          scoreRadius += targetfaceRadius/10;
-          scoreValue--;
-        }
-      }
-    } while (distanceFromCenter > maxRadius);
   },
 
   /**
