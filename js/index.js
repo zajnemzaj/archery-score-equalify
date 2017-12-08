@@ -99,13 +99,19 @@ var targetFace = {
    * @return {number} scoreOfRound
    */
   getRoundScore : function(maxRadius) {
-    var scoreOfRound = 0;
+    var scoreOfRound = 0,
+        scoreToTest = +document.getElementById("inputHighScore").value;
     do {
       scoreOfRound += parseInt(this.getOneScore(parseInt(maxRadius)));
       // console.log("scoreOfRound: ",scoreOfRound, "maxRadius: ", maxRadius);
     } while(this.arrowCount % 30 !== 0);
     this.roundCount++;
     // console.log("roundCount:",this.roundCount,"arrowCount:",this.arrowCount,"radius: ",maxRadius,"scoreOfRound: ",scoreOfRound);
+    if (scoreToTest-5 <= scoreOfRound && scoreOfRound <= scoreToTest+5) {
+      ctx1rstChart.fillStyle="#007BFF";
+    } else {
+      ctx1rstChart.fillStyle="#000000";
+    }
     ctx1rstChart.fillRect(parseInt(maxRadius),300-parseInt(scoreOfRound),2,2);
     return scoreOfRound;
   },
@@ -123,7 +129,7 @@ var targetFace = {
         radiusNo = 0,
         actualScore = 0,
         helper = 0,
-        roundsNr = +document.getElementById("inputRounds").value;
+        roundsNr = 200;
     for (i = roundsNr; i > 0; i--) {
       actualScore = this.getRoundScore(parseInt(radius));
       if (scoreToTest-5 <= actualScore && actualScore <= scoreToTest+5) {
@@ -138,13 +144,23 @@ var targetFace = {
     return parseInt(radiusSum/radiusNo);
   },
 
+  /**
+   * Shooting runCount times 200 rounds to get diameter for given score
+   * @return {number} diameter
+   */
   getRoundDiamAverages : function() {
-    var runCount = 20,
-        runSum = 0;
+    var runCount = 32,
+        runSum = 0,
+        finalDiam = 0;
+    this.clearCanvasChart(ctx1rst,ctx1rstChart);
     for (var i = 0; i < runCount; i++) {
       runSum += this.getXRoundsDiam();
     }
-    document.getElementById("tmpOutput").innerHTML += "Optimal radius for higher score: " + Math.round(runSum/runCount) + "<br>";
+    finalDiam = Math.round(runSum/runCount);
+    // document.getElementById("tmpOutput").innerHTML += "Optimal radius for higher score: " + finalDiam + "<br>";
+    document.getElementById("inputGrouping").value = finalDiam;
+    return finalDiam;
+    //CanvasObject.GetComponent<Canvas>().enabled = false;
   }
 };
 
