@@ -146,13 +146,13 @@ var targetFace = {
 
   /**
    * Shooting runCount times 200 rounds to get diameter for given score
-   * @return {number} diameter
+   * @return {number} finalDiam
    */
   getRoundDiamAverages : function() {
+    this.clearCanvasChart(ctx1rst,ctx1rstChart);
     var runCount = 32,
         runSum = 0,
         finalDiam = 0;
-    this.clearCanvasChart(ctx1rst,ctx1rstChart);
     for (var i = 0; i < runCount; i++) {
       runSum += this.getXRoundsDiam();
     }
@@ -161,6 +161,42 @@ var targetFace = {
     document.getElementById("inputGrouping").value = finalDiam;
     return finalDiam;
     //CanvasObject.GetComponent<Canvas>().enabled = false;
+  },
+
+  /**
+   * Shooting 30 arrows and getting the score of it
+   * @param {number} groupingSize
+   * @param {number} targetfaceRadius
+   * @return {number} diameter
+   */
+  getTFRoundScore : function(groupingSize,targetfaceRadius) {
+
+  },
+
+  /**
+   * Simulating target ratio decreasing until we get the desired lower score
+   * with grouping of higher score shooter
+   * @return {number} diameter
+   */
+  getTargetSize : function() {
+    this.clearCanvasChart(ctx1rst,ctx1rstChart);
+    var scoreHigh = +document.getElementById("inputHighScore").value,
+        scoreLow = +document.getElementById("inputLowScore").value,
+        groupingSize = +document.getElementById("inputGrouping").value,
+        roundCount = 200,
+        targetfaceRadius = 200,
+        targetSizeSum = 0,
+        targetSizeNo = 0;
+    do {
+      actualScore = this.getTFRoundScore(groupingSize,targetfaceRadius);
+      if (scoreLow-5 <= actualScore && actualScore <= scoreLow+5) {
+        targetSizeSum += targetfaceRadius;
+        targetSizeNo++;
+      document.getElementById("tmpOutput").innerHTML += "score: " + actualScore + " with targetSize: " + targetfaceRadius + "<br>";
+      }
+      targetfaceRadius--;
+    } while (targetfaceRadius >= groupingSize);
+    return parseInt(targetSizeSum/targetSizeNo);
   }
 };
 
