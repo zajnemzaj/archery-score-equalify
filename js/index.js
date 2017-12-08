@@ -44,7 +44,7 @@ var targetFace = {
    * @param {number} y
    */
   drawArrow : function(cctx,x,y) {
-    cctx.fillRect(x,this.size-y,2,2);
+    cctx.fillRect(x,this.size-y,1,1);
   },
 
   /**
@@ -112,7 +112,7 @@ var targetFace = {
     } else {
       ctx1rstChart.fillStyle="#000000";
     }
-    ctx1rstChart.fillRect(parseInt(maxRadius),300-parseInt(scoreOfRound),2,2);
+    ctx1rstChart.fillRect(parseInt(maxRadius),300-parseInt(scoreOfRound),1,1);
     return scoreOfRound;
   },
 
@@ -164,13 +164,58 @@ var targetFace = {
   },
 
   /**
-   * Shooting 30 arrows and getting the score of it
-   * @param {number} groupingSize
+   * Shooting 1 arrow and getting the score of it
+   * @param {number} maxRadius
    * @param {number} targetfaceRadius
    * @return {number} diameter
    */
-  getTFRoundScore : function(groupingSize,targetfaceRadius) {
+  getTFOneScore : function(maxRadius,targetfaceRadius) {
+    var x = 0,
+        y = 0,
+        drawx = 0,
+        drawy = 0,
+        distanceFromCenter = 0,
+        scoreRadius = targetfaceRadius/10, // starting with 10 ring which has 20mm radius (400/20) on 40cm targetface
+        scoreValue = 10; // starting score value
+    do {
+      if (scoreRadius > maxRadius) {
+        scoreRadius = maxRadius;
+      }
+      x = getRandomNumber(maxRadius*2);
+      y = getRandomNumber(maxRadius*2);
+      // Getting distance from center
+      distanceFromCenter = Math.sqrt(Math.pow((maxRadius-x),2) + Math.pow((maxRadius-y),2));
+      while (parseFloat(distanceFromCenter) <= parseFloat(maxRadius)) {
+          // console.log("scoreRadius:" ,scoreRadius, "scoreValue:",scoreValue);
+        if (parseFloat(distanceFromCenter) <= parseFloat(scoreRadius)) {
+          drawx = this.size/2-maxRadius+x;
+          drawy = this.size/2-maxRadius+y;
+          this.drawArrow(ctx1rst,drawx,drawy);
+          this.arrowCount++;
+          // document.getElementById("tmpOutput").innerHTML += "x: " + x + ", y: " + y + ", drawx: " + drawx + ", drawy: " + drawy + ", score: " + scoreValue + ", distanceFromCenter: " + distanceFromCenter + "<br>";
+          // console.log("drawx:",drawx,"drawy:",drawy,"scoreValue:",scoreValue,"distanceFromCenter:",distanceFromCenter);
+          return scoreValue;
+        } else {
+          scoreRadius += targetfaceRadius/10;
+          scoreValue--;
+        }
+      }
+    } while (distanceFromCenter > maxRadius);
+  },
 
+  /**
+   * Shooting 30 arrows and getting the score of it, drawing on the chart
+   * @param {number} maxRadius
+   * @param {number} targetfaceRadius
+   * @return {number} diameter
+   */
+  getTFRoundScore : function(maxRadius,targetfaceRadius) {
+    var roundScore = 0;
+    for (var i = 0; i < 30; i++) {
+      roundScore += this.getTFOneScore(maxRadius,targetfaceRadius);
+    }
+    // document.getElementById("tmpOutput").innerHTML += "Round score: " + roundScore + " at targetfaceRadius" + targetfaceRadius + "<br>";
+    return roundScore;
   },
 
   /**
@@ -188,14 +233,22 @@ var targetFace = {
         targetSizeSum = 0,
         targetSizeNo = 0;
     do {
-      actualScore = this.getTFRoundScore(groupingSize,targetfaceRadius);
-      if (scoreLow-5 <= actualScore && actualScore <= scoreLow+5) {
-        targetSizeSum += targetfaceRadius;
-        targetSizeNo++;
-      document.getElementById("tmpOutput").innerHTML += "score: " + actualScore + " with targetSize: " + targetfaceRadius + "<br>";
+      for (var i = 0; i < 10; i++) {
+        actualScore = this.getTFRoundScore(groupingSize,targetfaceRadius);
+        if (scoreLow-5 <= actualScore && actualScore <= scoreLow+5) {
+          targetSizeSum += targetfaceRadius;
+          targetSizeNo++;
+          ctx1rstChart.fillStyle="#007BFF";
+          // document.getElementById("tmpOutput").innerHTML += "score: " + actualScore + " with targetSize: " + targetfaceRadius + "<br>";
+        } else {
+          ctx1rstChart.fillStyle="#000000";
+        }
+        ctx1rstChart.fillRect(targetfaceRadius,300-actualScore,1,1);
       }
       targetfaceRadius--;
     } while (targetfaceRadius >= groupingSize);
+    // document.getElementById("tmpOutput").innerHTML += "Best targetface radius for high score shooter to shoot around " + scoreLow + ": " + parseInt(targetSizeSum/targetSizeNo) + "<br>";
+    document.getElementById("inputFinalRadius").value = parseInt(targetSizeSum/targetSizeNo);
     return parseInt(targetSizeSum/targetSizeNo);
   }
 };

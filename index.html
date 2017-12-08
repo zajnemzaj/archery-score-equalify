@@ -12,8 +12,11 @@
   <label for="inputHighScore">Higher score:</label>
   <input type="text" id="inputHighScore" value="285">
   <br>
-  <label for="inputGrouping">Grouping for higher score (mm):</label>
+  <label for="inputGrouping">Average radius of grouping for high-scorer on 40cm targetface (mm):</label>
   <input type="text" id="inputGrouping" value="">
+  <br>
+  <label for="inputFinalRadius">Suggested radius of targetface to download for high score archer (mm):</label>
+  <input type="text" id="inputFinalRadius" value="">
   <br>
   <button type="button" id="buttonGetGrouping" onclick="targetFace.getRoundDiamAverages()">Find grouping size</button>
   <button type="button" id="buttonGetTargetSize" onclick="targetFace.getTargetSize()">Calculate target size</button>
