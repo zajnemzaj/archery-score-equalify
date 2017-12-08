@@ -2,4 +2,6 @@ archery-score-equalify
 
 Equal scores for everyone!
 
-For now it just generates a size A4 pdf filye with a WA 40cm targetface scaled down.
+For now it just simulating shots and calculating target size for better shooter.
+
+https://rebegin.dyndns.org/archery-score-equalify/
